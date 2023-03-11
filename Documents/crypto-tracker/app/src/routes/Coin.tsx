@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 const Container = styled.div`
   padding: 0px 20px;
@@ -21,8 +21,11 @@ const Loader = styled.span`
   tex-align: center;
   display: block;
 `;
-
 interface RouteParams {
+  [key: string]: string | undefined; //명시적 속성의 모든 타입을 가지고 있어야 함
+  coinId: string;
+}
+interface RouterState {
   state: {
     name: string;
   };
@@ -30,8 +33,26 @@ interface RouteParams {
 
 function Coin() {
   const [loading, setLoding] = useState(true);
-  const { state } = useLocation() as RouteParams;
-  console.log(state)
+  const { coinId } = useParams<RouteParams>();
+  const { state } = useLocation() as RouterState;
+  const [info, setInfo] = useState({});
+  const [priceInfo, setPriceInfo] = useState({});
+  useEffect(() => {
+    (async () => {
+      //API할 URL
+      const infoData = await (
+        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+      ).json();
+      // console.log(infoData);
+      const priceData = await (
+        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+      ).json();
+      // console.log(priceData);
+      setInfo(infoData);
+      setPriceInfo(priceData);
+    })();
+  }, []);
+
   return (
     <Container>
       <Header>
