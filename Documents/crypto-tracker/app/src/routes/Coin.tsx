@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useParams, Outlet} from "react-router-dom";
+import { useLocation, useParams, Outlet } from "react-router-dom";
 import styled from "styled-components";
 const Container = styled.div`
   padding: 0px 20px;
@@ -158,8 +158,10 @@ function Coin() {
   return (
     <Container>
       <Header>
-        <Title>{state?.name ? state.name : loading? "Loding..." : info?.name}</Title>
-      {/* 여기info는 API로 받아오는 infoData이다 */}
+        <Title>
+          {state?.name ? state.name : loading ? "Loding..." : info?.name}
+        </Title>
+        {/* 여기info는 API로 받아오는 infoData이다 */}
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -190,6 +192,7 @@ function Coin() {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+          <Outlet />
         </>
       )}
     </Container>
