@@ -61,7 +61,9 @@ function Chart() {
               axisTicks: { show: false },
               labels: { show: false },
               type: "datetime",
-              categories: data?.map((price) => price.time_close),
+              categories: data?.map((price) =>
+                new Date(+price.time_close * 1000).toUTCString()
+              ),
             },
             fill: {
               type: "gradient",
