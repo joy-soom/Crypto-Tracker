@@ -12,16 +12,12 @@ interface IHistorical {
   volume: number;
   market_cap: number;
 }
-interface ChartProps {
-  coinId: string;
-}
 
 function Chart() {
   const coinId = useOutletContext();
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(`${coinId}`)
   );
-  console.log(data?.map((price) => price.close) ?? []);
   return (
     <div>
       {isLoading ? (
@@ -31,10 +27,10 @@ function Chart() {
           type="line"
           series={[
             {
-              name: "Price",
-              //data를 가져다가 price.close로 array를 만듬
+              name: "close_price",
               data: data?.map((price) => price.close) ?? [],
             },
+           
           ]}
           options={{
             theme: {
@@ -43,9 +39,6 @@ function Chart() {
             chart: {
               height: 300,
               width: 500,
-              // toolbar: {
-              //   show: false,
-              // },
               background: "transparent",
             },
             grid: { show: false },
@@ -72,9 +65,9 @@ function Chart() {
             colors: ["#0fbcf9"],
             tooltip: {
               y: {
-                //데이터 값의 소수점2자리까지만 보이게 하기
                 formatter: (value) => `${value.toFixed(2)}`,
               },
+              
             },
           }}
         />

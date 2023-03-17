@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+
 import { fetchCoins } from "../api";
 
 const Container = styled.div`
@@ -61,7 +62,6 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
-  console.log(isLoading, data)
   return (
     <Container>
       <Header>

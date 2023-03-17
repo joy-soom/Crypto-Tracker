@@ -6,8 +6,3 @@ export const theme: DefaultTheme = {
   accentColor:"#00a8ff",
 };
 
-// export const darkTheme: DefaultTheme = {
-//   bgColor: "black",
-//   textColor: "white",
-//   btnColor:"teal",
-// };

@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { HelmetProvider } from "react-helmet-async";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Merriweather&family=Noto+Sans+KR:wght@100&family=Roboto+Mono:wght@300;400&display=swap');
@@ -39,8 +40,8 @@ footer, header, hgroup, main, menu, nav, section {
 body {
   line-height: 1;
   font-family:'Jua', sans-serif;
-  background-color:${props => props.theme.bgColor};
-  color: ${props => props.theme.textColor}
+  background-color:${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor}
 }
 a {
   text-decoration : none;
@@ -67,8 +68,10 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true}/>
+      <HelmetProvider>
+        <Router />
+      </HelmetProvider>
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }

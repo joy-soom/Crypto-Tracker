@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   useLocation,
   useParams,
@@ -7,6 +7,7 @@ import {
   Link,
   useMatch,
 } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo } from "../api";
 import { fetchCoinTickers } from "../api";
@@ -19,12 +20,13 @@ const Container = styled.div`
 const Header = styled.div`
   height: 10vh;
   display: felx;
-  justify-content: center;
   align-items: center;
 `;
 const Title = styled.h1`
-  font-szie: 48px;
   color: ${(props) => props.theme.accentColor};
+  position: relative;
+  left: 40%;
+  transform: translateX(-50%);
 `;
 
 const Loader = styled.span`
@@ -75,6 +77,20 @@ const Tab = styled.span<{ isActive: boolean }>`
     display: block;
   }
 `;
+
+const Button = styled.button`
+  border-radius: 10px;
+  border: none;
+  width: 50px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 13px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 interface RouteParams {
   [key: string]: string | undefined; //명시적 속성의 모든 타입을 가지고 있어야 함
   coinId: string;
@@ -176,35 +192,22 @@ function Coin() {
     ["info", coinId],
     () => fetchCoinInfo(`${coinId}`)
   );
-console.log(infoData)
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
     () => fetchCoinTickers(`${coinId}`)
   );
-  console.log(tickersData);
-
-  // const [loading, setLoding] = useState(true);
-  // const [info, setInfo] = useState<InfoData>();
-  // const [priceInfo, setPriceInfo] = useState<PriceData>();
-  // useEffect(() => {
-  //   (async () => {
-  //     //API할 URL
-  //     const infoData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-  //     ).json();
-  //     const priceData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-  //     ).json();
-  //     setInfo(infoData);
-  //     setPriceInfo(priceData);
-  //     setLoding(false);
-  //   })();
-  // }, [coinId]);
+  let navigate = useNavigate();
 
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loding..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
+        <Button onClick={() => navigate(-1)}>go back</Button>
         <Title>
           {state?.name ? state.name : loading ? "Loding..." : infoData?.name}
         </Title>
@@ -241,10 +244,10 @@ console.log(infoData)
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`}>Price</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`/${coinId}/price`}>Volume</Link>
             </Tab>
           </Tabs>
 
