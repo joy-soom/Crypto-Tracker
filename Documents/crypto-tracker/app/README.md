@@ -1,7 +1,7 @@
 # Soom Crypto-Tracker
 ## Start Project
 ```
-git clone [url]
+git clone https://github.com/soominpark9/Crypto-Tracker.git
 cd server/
 npm i
 npm start 
