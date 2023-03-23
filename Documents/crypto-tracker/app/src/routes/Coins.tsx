@@ -38,6 +38,8 @@ const Title = styled.h1`
   font-szie: 48px;
   color: ${(props) => props.theme.accentColor};
 `;
+const Title2 = styled.div`
+font-size : 30px`
 
 const Loader = styled.span`
   tex-align: center;
@@ -65,7 +67,7 @@ function Coins() {
   return (
     <Container>
       <Header>
-        <Title>코인</Title>
+        <Title2>All Coins</Title2>
       </Header>
       {isLoading ? (
         <Loader>Loding...</Loader>
