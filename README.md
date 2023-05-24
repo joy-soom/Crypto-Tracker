@@ -37,3 +37,9 @@ app / # react app
 - `Get /coIn/:CoinId` - show eachCoin's data
 - `Get /Coin/Chart` - show Coin's price chart
 - `Get /Coin/Price` - show Coin's price volume chart
+
+##💡 성장 경험
+1. react-query를 활용하여 캐싱을 효율적으로 관리 할 수 있게 되었다
+2. api만 따로 관리하는 파일을 생성하여 보다 구조적으로 깔끔하게 코드를 짤 수 있게 되었다.
+3. typescript의 interface 기능을 활용하여 type을 정의하여 보다 단단한 코드를 만들 수 있게 되었다.
+4. styled-components를 활용하여 페이지 로딩 시간을 단축 할 수 있게 되었고,중복되는 스타일은 props 컴포넌트로 재활용 하는 등 다양하게 활용해 보는 경험을 할 수 있었다.
